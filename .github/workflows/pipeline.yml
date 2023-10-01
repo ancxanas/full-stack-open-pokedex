@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
 
 jobs:
   simple_deployment_pipeline:
@@ -28,9 +31,20 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
 
+  tag_release:
+    if: ${{github.event_name == 'push'}}
+    needs: [simple_deployment_pipeline]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.64.0
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
   render_deployment:
+    if: ${{github.event_name == 'push'}}
     name: Deploy to Render
-    needs: simple_deployment_pipeline
+    needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
     steps:
       - name: Trigger deployment
