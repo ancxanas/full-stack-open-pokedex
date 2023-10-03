@@ -24,6 +24,6 @@ jobs:
         run: echo "$COMMIT_MESSAGES"
       - name: commit messages
         env:
-          $HELLO: ${{contains(join(github.event.commits.*.message), 'skip')}}
+          $HELLO: ${{join(contains(join(github.event.commits.*.message), 'skip'))}}
         if: ${{contains(join(github.event.commits.*.message), 'skip')}}
         run: echo "$HELLO"
