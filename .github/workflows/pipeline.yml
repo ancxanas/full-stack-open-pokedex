@@ -32,7 +32,7 @@ jobs:
           wait-on: http://localhost:5000
 
   tag_release:
-    if: ${{github.event_name == 'push' && contains(join(github.event.commits.*.message), '[skip ci]') }}
+    if: ${{github.event_name == 'push' && contains(contains(join(github.event.commits.*.message), 'skip'), '[skip ci]') }}
     needs: simple_deployment_pipeline
     runs-on: ubuntu-latest
     steps:
