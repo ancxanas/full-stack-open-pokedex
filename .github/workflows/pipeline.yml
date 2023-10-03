@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Skip CI due to commit messages
-        if: ${{ contains(join(github.event.commits.*.message), 'skip')}}
+        if: ${{ contains(join(github.event.commits.*.message), '[skip ci]')}}
         run: echo "Hello"
       - uses: actions/checkout@v3
       - name: Bump version and push tag
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Skip CI due to commit messages
-        if: ${{ contains(join(github.event.commits.*.message), 'skip')}}
+        if: ${{ contains(join(github.event.commits.*.message), '[skip ci]')}}
         run: echo 'hello'
       - name: Trigger deployment
         run: curl https://api.render.com/deploy/srv-${{secrets.RENDER_SERVICE_ID}}?key=${{secrets.RENDER_API_KEY}}
