@@ -23,5 +23,4 @@ jobs:
           COMMIT_MESSAGES: ${{toJson(github.event.commits.*.message)}}
         run: echo "$COMMIT_MESSAGES"
       - name: test run
-        if: ${{contains(github.event.commits.message, 'skip')}}
-        run: echo "Hello it works"
+        run: echo "${{github.event.commits.message}}"
