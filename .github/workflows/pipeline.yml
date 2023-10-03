@@ -32,13 +32,10 @@ jobs:
           wait-on: http://localhost:5000
 
   tag_release:
-    if: ${{github.event_name == 'push'}}
+    if: ${{github.event_name == 'push' && contains(join(github.event.commits.*.message), '[skip ci]') }}
     needs: simple_deployment_pipeline
     runs-on: ubuntu-latest
     steps:
-      - name: Skip CI due to commit messages
-        if: ${{ contains(join(github.event.commits.*.message), '[skip ci]')}}
-        run: echo "Hello"
       - uses: actions/checkout@v3
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.64.0
