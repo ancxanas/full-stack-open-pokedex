@@ -63,7 +63,7 @@ jobs:
           username: Discord
           color: '#00ff22'
           description: ''
-          details: 'to https://pokedox-n4jp.onrender.com/ by ${{github.event.commits.*.committer.username}}'
+          details: 'to https://pokedox-n4jp.onrender.com/ by ${{join(github.event.commits.*.committer.username)}}'
           footer: 'Severity: Informational'
           text: 'A new version of Pokedex deployed'
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
