@@ -62,7 +62,7 @@ jobs:
           color: '#00ff22'
           avatarUrl: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg
           description: 'commit'
-          details: ${{github.event.commits.url}}
+          details: ${{join(github.event.commits.url)}}
           footer: 'Severity: Informational'
           text: 'A new version of Pokedex deployed'
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
