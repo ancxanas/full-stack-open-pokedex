@@ -53,16 +53,31 @@ jobs:
 
   discord_notify:
     runs-on: ubuntu-latest
+    needs: render_deployment
     steps:
-      - name: Discord Notification
+      - name: Success notification
+        if: ${{success()}}
         uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
         with:
           severity: Informational
           username: Discord
           color: '#00ff22'
-          avatarUrl: https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg
+          avatarUrl:
           description: 'commit'
           details: '${{join(github.event.commits.*.url)}} by ${{join(github.event.commits.*.committer.username)}}'
           footer: 'Severity: Informational'
           text: 'A new version of Pokedex deployed'
+          webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
+      - name: Failure notification
+        if: ${{failure()}}
+        uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+        with:
+          severity: Informational
+          username: Discord
+          color: '#ff0000.'
+          avatarUrl:
+          description: ''
+          details: '${{join(github.event.commits.*.url)}} by ${{join(github.event.commits.*.committer.username)}} broke the build'
+          footer: 'Severity: Error'
+          text: ''
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
