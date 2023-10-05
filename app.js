@@ -11,6 +11,8 @@ app.get('/version', (_req, res) => {
 })
 
 app.get('/health', (req, res) => {
+  throw 'error...'
+
   res.send('ok')
 })
 
