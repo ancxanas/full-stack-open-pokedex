@@ -62,7 +62,6 @@ jobs:
           severity: Informational
           username: Discord
           color: '#00ff22'
-          avatarUrl:
           description: 'commit'
           details: '${{join(github.event.commits.*.url)}} by ${{join(github.event.commits.*.committer.username)}}'
           footer: 'Severity: Informational'
@@ -75,7 +74,6 @@ jobs:
           severity: Informational
           username: Discord
           color: '#ff0000.'
-          avatarUrl:
           description: ''
           details: '${{join(github.event.commits.*.url)}} by ${{join(github.event.commits.*.committer.username)}} broke the build'
           footer: 'Severity: Error'
