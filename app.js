@@ -10,10 +10,8 @@ app.get('/version', (_req, res) => {
   res.send('2')
 })
 
-app.get('/health', (_req, _res) => {
-  throw 'error...'
-
-  // res.send('ok')
+app.get('/health', (req, res) => {
+  res.send('ok')
 })
 
 app.listen(PORT, () => {
