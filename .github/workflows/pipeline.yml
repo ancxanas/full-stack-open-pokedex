@@ -60,10 +60,10 @@ jobs:
         with:
           severity: informational
           username: Github
-          description: ''
+          description: 'to https://pokedox-n4jp.onrender.com by ${{github.event.commits.*.committer.username}}'
           details: ''
-          footer:
-          text:
+          footer: 'Severity: Informational'
+          text: 'A new version of Pokedex deployed'
           color: '#0fff50'
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
       - run: echo "$RENDER_RESULT" && echo "$DEPLOY_RESULT"
