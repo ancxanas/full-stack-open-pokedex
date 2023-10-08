@@ -54,6 +54,7 @@ jobs:
   discord_notify:
     needs: [simple_deployment_pipeline, render_deployment]
     runs-on: ubuntu-latest
+    if: ${{always()}}
     steps:
       - if: ${{needs.simple_deployment_pipeline.result == 'success' && needs.render_deployment.result == 'success'}}
         uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
