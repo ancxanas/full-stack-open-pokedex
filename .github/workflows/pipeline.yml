@@ -76,5 +76,5 @@ jobs:
           details: '${{join(github.event.commits.*.url)}} by ${{join(github.event.commits.*.committer.username)}} broke the build :('
           footer: 'Severity: Error'
           text: 'Build failed'
-          color: '#0fff50'
+          color: '#ff0000'
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
