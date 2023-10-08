@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{always()}}
     steps:
-      - if: ${{always() && needs.simple_deployment_pipeline.result == 'success' && needs.render_deployment.result == 'success'}}
+      - if: ${{always() || needs.simple_deployment_pipeline.result == 'success' && needs.render_deployment.result == 'success'}}
         uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
         with:
           severity: informational
@@ -67,7 +67,7 @@ jobs:
           text: 'A new version of Pokedex deployed'
           color: '#0fff50'
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
-      - if: ${{always() && !needs.simple_deployment_pipeline.result == 'success' && !needs.render_deployment.result == 'success'}}
+      - if: ${{always() || !needs.simple_deployment_pipeline.result == 'success' && !needs.render_deployment.result == 'success'}}
         uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
         with:
           severity: Error
