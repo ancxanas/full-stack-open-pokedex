@@ -54,19 +54,26 @@ jobs:
   discord_notify:
     needs: [simple_deployment_pipeline, render_deployment]
     runs-on: ubuntu-latest
-    if: ${{needs.simple_deployment_pipeline.result == 'success' && needs.render_deployment.result == 'success'}}
     steps:
-      - uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+      - if: ${{needs.simple_deployment_pipeline.result == 'success' && needs.render_deployment.result == 'success'}}
+        uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
         with:
           severity: informational
           username: Github
-          description: 'to https://pokedox-n4jp.onrender.com by ${{github.event.commits.*.committer.username}}'
+          description: 'to https://pokedox-n4jp.onrender.com by ${{join(github.event.commits.*.committer.username)}}'
           details: ''
           footer: 'Severity: Informational'
           text: 'A new version of Pokedex deployed'
           color: '#0fff50'
           webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
-      - run: echo "$RENDER_RESULT" && echo "$DEPLOY_RESULT"
-        env:
-          RENDER_RESULT: ${{toJson(needs.render_deployment)}}
-          DEPLOY_RESULT: ${{toJson(needs.simple_deployment_pipeline)}}
+      - if: ${{!needs.simple_deployment_pipeline.result == 'success' && !needs.render_deployment.result == 'success'}}
+        uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
+        with:
+          severity: Error
+          username: Github
+          description: 'commit'
+          details: '${{join(github.event.commits.*.url)}} by ${{join(github.event.commits.*.committer.username)}} broke the build :('
+          footer: 'Severity: Error'
+          text: 'Build failed'
+          color: '#0fff50'
+          webhookUrl: ${{secrets.DISCORD_WEBHOOK}}
