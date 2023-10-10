@@ -1,7 +1,6 @@
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    - cron: 00 6-9 * * *
 
 jobs:
   url_health_check:
@@ -14,6 +13,6 @@ jobs:
           url: https://pokedox-n4jp.onrender.com
           follow-redirect: false # Optional, defaults to "false"
           max-attempts: 3 # Optional, defaults to 1
-          retry-delay: 5s # Optional, only applicable to max-attempts > 1
+          retry-delay: 5m # Optional, only applicable to max-attempts > 1
           retry-all: false # Optional, defaults to "false"
 
